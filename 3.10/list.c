@@ -25,9 +25,17 @@ List list_insert_after(item_type value, Position p, List L)
 	return L;
 }
 
-List list_node_insert_after(struct node *new, Postion p, List L)
+List list_insert_tail(item_type value, List L)
 {
-	Postion tmp;
+	Position p = L;
+	p = list_find_last(L);
+	list_insert_after(value,p,L);
+	return L;
+}
+
+List list_insert_node_after(struct node *new, Position p, List L)
+{
+	Position tmp;
 	
 	assert(new != NULL);
 	assert(p != NULL);
@@ -97,18 +105,27 @@ List  list_reverse(List L)
 }
 
 
-Position list_find_first_larger_node(List L, item_type key_value)
+Position list_find_first_bigger_node(List L, item_type key_value)
 {
 	Position p = L;
 	
 	while (p->next != NULL) {
 		if (p->next->item > key_value)
 			break;
+		p = p->next;
 	}
 	return p;
 }
 
+Position list_remove_first_node(List L)
+{
+	Position tmp,p;
 
+	if (list_is_empty(L)) return NULL;
+	tmp = L->next;
+	L->next = L->next->next;
+	return tmp;
+}
 
 
 
